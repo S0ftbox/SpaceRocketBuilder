@@ -8,6 +8,6 @@ public class EngineData : MonoBehaviour
     public float mass;
     public float burnRate;
     public bool isEnabled = false;
-
+    public bool solidFuel;
     
 }

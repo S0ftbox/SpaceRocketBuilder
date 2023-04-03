@@ -51,7 +51,8 @@ public class liquidFuelEngine
 public class solidFuelEngine
 {
     public float thrustPower;
-    public float mass;
+    public float dryMass;
+    public float initialFuelMass;
     public float burnRate;
     public Sprite icon;
     public GameObject prefab;

@@ -5,5 +5,5 @@ using UnityEngine;
 public class CoreData : MonoBehaviour
 {
     public float mass;
-
+    public bool isManned;
 }

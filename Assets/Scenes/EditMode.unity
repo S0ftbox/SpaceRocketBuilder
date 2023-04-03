@@ -199,13 +199,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129516401}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.07, z: -10.41}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 1180024437}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &313499300
 GameObject:
@@ -476,7 +476,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &699203992
 GameObject:
@@ -507,7 +507,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &718324782
 GameObject:
@@ -668,7 +668,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &805814860
 GameObject:
@@ -821,38 +821,74 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   commandModules:
+  - isManned: 0
+    mass: 0.15
+    icon: {fileID: 21300000, guid: c22b3d3ecb75ae645a00cb1da6b47afa, type: 3}
+    prefab: {fileID: 4969257116922891714, guid: 0f0d3fa80d1da8a40b130f0ec573843c,
+      type: 3}
+    name: Guidance Computer
+    description: Unmanned command module, used for satellites or probes
   - isManned: 1
     mass: 1
     icon: {fileID: 21300000, guid: c22b3d3ecb75ae645a00cb1da6b47afa, type: 3}
-    prefab: {fileID: 8275625363118265127, guid: 0872ee2c8848c48498a5c3c09025dd32,
+    prefab: {fileID: 7154229132230662951, guid: 096f213afa0e2c541a056455bc2f5696,
       type: 3}
-    name: Manned (Legacy)
-    description: Test object
+    name: Manned Capsule
+    description: Capsule with capacity of one astronaut
   fuelTanks:
-  - dryMass: 1.5
-    initialFuelMass: 98.5
-    icon: {fileID: 21300000, guid: d8956507e6ed7a842857b0b638bc7763, type: 3}
-    prefab: {fileID: 2307545695927196518, guid: 8be5abca224603548977dd272e93487c,
-      type: 3}
-    name: Tank (Legacy)
-    description: Test object
   - dryMass: 1
-    initialFuelMass: 0
-    icon: {fileID: 21300000, guid: c22b3d3ecb75ae645a00cb1da6b47afa, type: 3}
-    prefab: {fileID: 8275625363118265127, guid: 0872ee2c8848c48498a5c3c09025dd32,
+    initialFuelMass: 50
+    icon: {fileID: 21300000, guid: d8956507e6ed7a842857b0b638bc7763, type: 3}
+    prefab: {fileID: 3183671151521282792, guid: 1f0524c7dacbdf0418463edf2d42bd46,
       type: 3}
-    name: Capsule (Legacy)
-    description: Not even a fuel tank
+    name: Small Fuel Tank 1.25
+    description: Smaller of the available 1.25m diameter fuel tanks
+  - dryMass: 2
+    initialFuelMass: 100
+    icon: {fileID: 21300000, guid: d8956507e6ed7a842857b0b638bc7763, type: 3}
+    prefab: {fileID: 7121706815327992846, guid: 76c9eef1dd16a334ba9bffb8d946b774,
+      type: 3}
+    name: Large Fuel Tank 1.25
+    description: Larger of the available 1.25m diameter fuel tanks
+  - dryMass: 1
+    initialFuelMass: 50
+    icon: {fileID: 21300000, guid: d8956507e6ed7a842857b0b638bc7763, type: 3}
+    prefab: {fileID: 5635772073309760572, guid: 924891b17d2ad61498edcd9e85d0b3b3,
+      type: 3}
+    name: Cone Fuel Tank
+    description: This tank may be put on top of the Guidance Computer
+  - dryMass: 4
+    initialFuelMass: 250
+    icon: {fileID: 21300000, guid: d8956507e6ed7a842857b0b638bc7763, type: 3}
+    prefab: {fileID: 440915949143495411, guid: 19716dac92898354cb0d1b97fcecf941, type: 3}
+    name: Small Fuel Tank 2.5
+    description: Smaller of the available 2.5m diameter fuel tanks
+  - dryMass: 10
+    initialFuelMass: 550
+    icon: {fileID: 21300000, guid: d8956507e6ed7a842857b0b638bc7763, type: 3}
+    prefab: {fileID: 7387664306811406859, guid: ed5b5829a87c1cc4d83ed546117611c9,
+      type: 3}
+    name: Large Fuel Tank 2.5
+    description: Larger of the available 2.5m diameter fuel tanks
   liquidFuelEngines:
   - thrustPower: 30
     mass: 1
     burnRate: 20
     icon: {fileID: 21300000, guid: 907d3ede3805677488b7e40b544d5b5c, type: 3}
-    prefab: {fileID: 4024107644543260816, guid: 5daab3417c4a5e940b58d140dae6919a,
+    prefab: {fileID: 8114035855075390617, guid: 4b21ead186ce49a4fb763cfcf73ea187,
       type: 3}
-    name: Engine (Legacy)
-    description: Test object
-  solidFuelEngines: []
+    name: Large Engine 1.25
+    description: Larger of the available 1.25m diameter liquid fuel engines
+  solidFuelEngines:
+  - thrustPower: 50
+    dryMass: 1.75
+    initialFuelMass: 50
+    burnRate: 5
+    icon: {fileID: 21300000, guid: 907d3ede3805677488b7e40b544d5b5c, type: 3}
+    prefab: {fileID: 8529158688214130899, guid: 64dea6182d0bd2c48857697982dd954f,
+      type: 3}
+    name: Small Engine 1.25
+    description: Smaller of the available 1.25m diameter solid fuel engines
   separators: []
   chutes: []
 --- !u!4 &864006788
@@ -1214,7 +1250,54 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1180024435
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1180024437}
+  - component: {fileID: 1180024436}
+  m_Layer: 0
+  m_Name: CameraController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1180024436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180024435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9d6365820d59014594e624818ad80b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollScale: 5
+  rotateScale: 10
+--- !u!4 &1180024437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180024435}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 129516404}
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1265411857
 GameObject:
@@ -1897,7 +1980,7 @@ RectTransform:
   - {fileID: 1265411858}
   - {fileID: 996462330}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1946,7 +2029,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1881658908
 GameObject:
