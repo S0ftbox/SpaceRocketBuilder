@@ -9,9 +9,11 @@ public class RocketPartActions : MonoBehaviour
     Vector3 rocketUpNode;
     Vector3 rocketDownNode;
     public GameObject cursor;
+    public StageComponents stageComponents;
     public GameObject stageEmptyPrefab;
     public StageManager stages;
     int currentStage;
+    int currentComponent;
     GameObject currentPart = null;
 
     public void AddPart(GameObject part)
@@ -24,9 +26,12 @@ public class RocketPartActions : MonoBehaviour
             Instantiate(currentPart, rocketParent.transform.GetChild(0).transform);
             rocketUpNode = currentPart.transform.GetChild(0).transform.position;
             rocketDownNode = currentPart.transform.GetChild(1).transform.position;
-            //stages.stages.
+            stages.stages = AddStage(stages);
+            stageComponents.components = AddStageComponent(stageComponents);
             currentStage = 0;
-            //stages.stages[currentStage] = stageEmptyPrefab;
+            currentComponent = 0;
+            stages.stages[currentStage] = stageComponents;
+            stageComponents.components[currentComponent] = currentPart;
         }
         else
         {
@@ -54,6 +59,9 @@ public class RocketPartActions : MonoBehaviour
                 }
                 tempObject.transform.SetParent(rocketParent.transform.GetChild(currentStage).transform);
                 rocketDownNode = tempObjectDownNode;
+                currentComponent++;
+                stageComponents.components = AddStageComponent(stageComponents);
+                stageComponents.components[currentComponent] = tempObject;
             }
             if (Vector3.Distance(tempObjectDownNode, rocketUpNode) <= distanceToSnap)
             {
@@ -69,5 +77,21 @@ public class RocketPartActions : MonoBehaviour
             }
         }
         
+    }
+
+    StageComponents[] AddStage(StageManager previousArray)
+    {
+        StageComponents[] temp = new StageComponents[previousArray.stages.Length + 1];
+        for (int i = 0; i < previousArray.stages.Length; i++)
+            temp[i] = previousArray.stages[i];
+        return temp;
+    }
+
+    GameObject[] AddStageComponent(StageComponents previousArray)
+    {
+        GameObject[] temp = new GameObject[previousArray.components.Length + 1];
+        for (int i = 0; i < previousArray.components.Length; i++)
+            temp[i] = previousArray.components[i];
+        return temp;
     }
 }

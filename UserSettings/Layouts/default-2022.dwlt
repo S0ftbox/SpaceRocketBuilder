@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 105
+  controlID: 99
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 420
     height: 947
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -120,8 +120,8 @@ MonoBehaviour:
     y: 688
     width: 1500
     height: 259
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 13}
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 40
+  controlID: 41
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 41
+  controlID: 42
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -348,22 +348,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs/EditMode
+    - Assets/Prefabs/RocketComponents/SoildFuelEngines
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs/EditMode
+  - Assets/Prefabs/RocketComponents/SoildFuelEngines
   m_LastFoldersGridSize: -1
   m_LastProjectPath: F:\UNITY\Space Rocket Builder
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 58}
-    m_SelectedIDs: 704d0000
-    m_LastClickedID: 19824
-    m_ExpandedIDs: 000000005a4d00005c4d00005e4d000000ca9a3b
+    scrollPos: {x: 0, y: 102}
+    m_SelectedIDs: f44d0000
+    m_LastClickedID: 19956
+    m_ExpandedIDs: 00000000ce4d0000d04d0000d24d0000d44d0000d64d0000d84d000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -391,7 +391,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000005a4d00005c4d00005e4d0000
+    m_ExpandedIDs: 00000000ce4d0000d04d0000d24d0000d44d0000d64d0000d84d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -416,10 +416,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: de4b0000
-    m_LastClickedInstanceID: 19422
+    m_SelectedInstanceIDs: d0570000
+    m_LastClickedInstanceID: 22480
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c6230000804d000000000000
+    m_ExpandedInstanceIDs: c6230000804d000000000000a84c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -446,7 +446,7 @@ MonoBehaviour:
     m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 64
   m_SkipHiddenPackages: 0
-  m_DirectoriesAreaWidth: 115
+  m_DirectoriesAreaWidth: 214
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -521,23 +521,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: de4b0000
-      m_LastClickedID: 19422
-      m_ExpandedIDs: 30a5fdfffacdffff6ce6ffffc4ebffff6ceffffff4f1ffff94f2ffff4ef9ffff70f9ffff34fbffffda4b0000
+      m_SelectedIDs: d0570000
+      m_LastClickedID: 22480
+      m_ExpandedIDs: b238bdffec3bbdff7a00c4ffd21bc6ffc804c7ff809cffffcc9dffff60cbffffbef8ffffeaf9ffff34fbffff824e0000424f0000cc570000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: StagePrefab
+        m_OriginalName: StagePrefab
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 24268
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 4}
       m_SearchString: 
@@ -806,9 +806,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.022891521, y: 0.98287463, z: -1.0918207}
+    m_Target: {x: 0, y: 0, z: 0}
     speed: 2
-    m_Value: {x: -0.022891521, y: 0.98287463, z: -1.0918207}
+    m_Value: {x: 0, y: 0, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -854,17 +854,17 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.105714574, y: 0.49668956, z: -0.06108475, w: -0.8593068}
+    m_Target: {x: -0.0023365011, y: -0.216677, z: 0.00054311915, w: -0.9762522}
     speed: 2
-    m_Value: {x: -0.105713755, y: 0.4966857, z: -0.061084278, w: -0.85930014}
+    m_Value: {x: -0.0023364744, y: -0.21667452, z: 0.0005431129, w: -0.97624105}
   m_Size:
-    m_Target: 2.1095405
+    m_Target: 1.1592025
     speed: 2
-    m_Value: 2.1095405
+    m_Value: 1.1592025
   m_Ortho:
-    m_Target: 0
+    m_Target: 1
     speed: 2
-    m_Value: 0
+    m_Value: 1
   m_CameraSettings:
     m_Speed: 1
     m_SpeedNormalized: 0.5

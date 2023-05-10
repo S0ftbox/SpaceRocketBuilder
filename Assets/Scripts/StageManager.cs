@@ -4,5 +4,11 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
-    public GameObject[] stages;
+    [SerializeField] public StageComponents[] stages;
+}
+
+[System.Serializable]
+public class StageComponents
+{
+    public GameObject[] components;
 }

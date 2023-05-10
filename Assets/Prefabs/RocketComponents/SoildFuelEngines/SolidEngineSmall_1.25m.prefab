@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3882685172168969080
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6466246893095387092}
+  m_Layer: 0
+  m_Name: NodeUp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6466246893095387092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3882685172168969080}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0075}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9013523712888076905}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5691543716205536019
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4184391201642471566}
+  m_Layer: 0
+  m_Name: NodeDown
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4184391201642471566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5691543716205536019}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0075}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9013523712888076905}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8835149267988225410
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11,7 +73,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 2d28fea3eb0bf2742bc2494bce4d4e53,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2d28fea3eb0bf2742bc2494bce4d4e53,
         type: 3}
@@ -68,8 +130,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: SolidEngineSmall_1.25m
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2d28fea3eb0bf2742bc2494bce4d4e53,
+        type: 3}
+      propertyPath: m_TagString
+      value: Engine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2d28fea3eb0bf2742bc2494bce4d4e53,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6466246893095387092}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2d28fea3eb0bf2742bc2494bce4d4e53,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4184391201642471566}
   m_SourcePrefab: {fileID: 100100000, guid: 2d28fea3eb0bf2742bc2494bce4d4e53, type: 3}
 --- !u!1 &8529158688214130899 stripped
 GameObject:
@@ -109,3 +184,9 @@ MonoBehaviour:
   dryMass: 0.75
   massWithFuel: 50
   currentMass: 0
+--- !u!4 &9013523712888076905 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2d28fea3eb0bf2742bc2494bce4d4e53,
+    type: 3}
+  m_PrefabInstance: {fileID: 8835149267988225410}
+  m_PrefabAsset: {fileID: 0}
