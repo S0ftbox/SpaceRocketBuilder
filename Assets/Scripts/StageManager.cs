@@ -2,13 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class StageManager : MonoBehaviour
 {
-    [SerializeField] public StageComponents[] stages;
-}
-
-[System.Serializable]
-public class StageComponents
-{
-    public GameObject[] components;
+    [SerializeField] public List<List<GameObject>> stages;
 }

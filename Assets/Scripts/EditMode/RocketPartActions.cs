@@ -9,12 +9,16 @@ public class RocketPartActions : MonoBehaviour
     Vector3 rocketUpNode;
     Vector3 rocketDownNode;
     public GameObject cursor;
-    public StageComponents stageComponents;
     public GameObject stageEmptyPrefab;
     public StageManager stages;
-    int currentStage;
-    int currentComponent;
+    int currentStage = 0;
+    public bool canPlaceAbove = true;
     GameObject currentPart = null;
+
+    void Start()
+    {
+        stages.stages = new List<List<GameObject>>();
+    }
 
     public void AddPart(GameObject part)
     {
@@ -26,12 +30,8 @@ public class RocketPartActions : MonoBehaviour
             Instantiate(currentPart, rocketParent.transform.GetChild(0).transform);
             rocketUpNode = currentPart.transform.GetChild(0).transform.position;
             rocketDownNode = currentPart.transform.GetChild(1).transform.position;
-            stages.stages = AddStage(stages);
-            stageComponents.components = AddStageComponent(stageComponents);
-            currentStage = 0;
-            currentComponent = 0;
-            stages.stages[currentStage] = stageComponents;
-            stageComponents.components[currentComponent] = currentPart;
+            stages.stages.Add(new List<GameObject>());
+            stages.stages[currentStage].Add(currentPart);
         }
         else
         {
@@ -50,48 +50,54 @@ public class RocketPartActions : MonoBehaviour
             cursor.transform.DetachChildren();
             if (Vector3.Distance(tempObjectUpNode, rocketDownNode) <= distanceToSnap)
             {
+                currentStage = stages.stages.Count - 1;
                 Vector3 tempDistanceUp = tempObjectUpNode - tempObject.transform.position;
                 tempObject.transform.position = new Vector3(rocketParent.transform.position.x, rocketDownNode.y - tempDistanceUp.y, rocketParent.transform.position.z);
-                if(tempObject.tag == "Engine")
+                if (tempObject.tag == "Engine")
                 {
                     Instantiate(stageEmptyPrefab, rocketParent.transform);
+                    stages.stages.Add(new List<GameObject>());
                     currentStage++;
                 }
                 tempObject.transform.SetParent(rocketParent.transform.GetChild(currentStage).transform);
                 rocketDownNode = tempObjectDownNode;
-                currentComponent++;
-                stageComponents.components = AddStageComponent(stageComponents);
-                stageComponents.components[currentComponent] = tempObject;
+                stages.stages[currentStage].Add(tempObject);
+                if (tempObject.tag == "Engine")
+                    PrintList(stages.stages);
             }
-            if (Vector3.Distance(tempObjectDownNode, rocketUpNode) <= distanceToSnap)
+            if (Vector3.Distance(tempObjectDownNode, rocketUpNode) <= distanceToSnap && canPlaceAbove)
             {
+                currentStage = 0;
                 Vector3 tempDistanceDown = tempObjectDownNode - tempObject.transform.position;
                 tempObject.transform.position = new Vector3(rocketParent.transform.position.x, rocketUpNode.y - tempDistanceDown.y, rocketParent.transform.position.z);
                 if (tempObject.tag == "Engine")
                 {
                     Instantiate(stageEmptyPrefab, rocketParent.transform);
-                    currentStage++;
+                    stages.stages.Insert(0, new List<GameObject>());
+                    currentStage = 1;
+                }
+                if (tempObject.name == "FuelTankCone_1.25m(Clone)")
+                {
+                    canPlaceAbove = false;
                 }
                 tempObject.transform.SetParent(rocketParent.transform.GetChild(currentStage).transform);
                 rocketUpNode = tempObjectUpNode;
+                stages.stages[currentStage].Insert(0, currentPart);
             }
         }
-        
     }
 
-    StageComponents[] AddStage(StageManager previousArray)
+    void PrintList(List<List<GameObject>> stages)
     {
-        StageComponents[] temp = new StageComponents[previousArray.stages.Length + 1];
-        for (int i = 0; i < previousArray.stages.Length; i++)
-            temp[i] = previousArray.stages[i];
-        return temp;
-    }
-
-    GameObject[] AddStageComponent(StageComponents previousArray)
-    {
-        GameObject[] temp = new GameObject[previousArray.components.Length + 1];
-        for (int i = 0; i < previousArray.components.Length; i++)
-            temp[i] = previousArray.components[i];
-        return temp;
+        int i = 0;
+        foreach(List<GameObject> inner in stages)
+        {
+            Debug.Log("Stage " + i);
+            foreach(GameObject gO in inner)
+            {
+                Debug.Log(gO.name + " " + i);
+            }
+            i++;
+        }
     }
 }
