@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 224348233645537332}
   m_Layer: 0
   m_Name: NodeDown
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 972583097807149156}
   m_Layer: 0
   m_Name: NodeUp
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

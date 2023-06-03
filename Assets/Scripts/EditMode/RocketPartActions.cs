@@ -5,7 +5,7 @@ using UnityEngine;
 public class RocketPartActions : MonoBehaviour
 {
     public float distanceToSnap = 0.5f;
-    public GameObject rocketParent;
+    GameObject rocketParent;
     Vector3 rocketUpNode;
     Vector3 rocketDownNode;
     public GameObject cursor;
@@ -18,6 +18,7 @@ public class RocketPartActions : MonoBehaviour
     void Start()
     {
         stages.stages = new List<List<GameObject>>();
+        rocketParent = GameObject.Find("Rocket").transform.GetChild(0).gameObject;
     }
 
     public void AddPart(GameObject part)

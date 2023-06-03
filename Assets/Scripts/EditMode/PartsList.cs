@@ -11,6 +11,44 @@ public class PartsList : MonoBehaviour
     [SerializeField] public solidFuelEngine[] solidFuelEngines;
     [SerializeField] public separator[] separators;
     [SerializeField] public chute[] chutes;
+
+    public GameObject getPrefab(string prefab)
+    {
+        int cloneWordFinder = prefab.IndexOf("(Clone)");
+        if(cloneWordFinder != -1)
+            prefab = prefab.Remove(prefab.Length - 7);
+        foreach(var c in commandModules)
+        {
+            if (c.prefab.name == prefab)
+                return c.prefab;
+        }
+        foreach(var f in fuelTanks)
+        {
+            if (f.prefab.name == prefab)
+                return f.prefab;
+        }
+        foreach (var l in liquidFuelEngines)
+        {
+            if (l.prefab.name == prefab)
+                return l.prefab;
+        }
+        foreach (var s in solidFuelEngines)
+        {
+            if (s.prefab.name == prefab)
+                return s.prefab;
+        }
+        foreach (var s in separators)
+        {
+            if (s.prefab.name == prefab)
+                return s.prefab;
+        }
+        foreach (var c in chutes)
+        {
+            if (c.prefab.name == prefab)
+                return c.prefab;
+        }
+        return null;
+    }
 }
 
 [System.Serializable]

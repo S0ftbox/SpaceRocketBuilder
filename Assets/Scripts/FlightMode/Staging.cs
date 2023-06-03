@@ -6,21 +6,23 @@ using UnityEngine.UI;
 public class Staging : MonoBehaviour
 {
     public Rocket rocket;
-    public Slider fuel;
-    float initialFuel;
+    public RectTransform fuel;
+    public float deltaV;
+    float currentFuel;
+    float initialRectX, initialRectY;
+    public Planet planet;
 
     void Start()
     {
-        initialFuel = rocket.tankMass - rocket.emptyTankMass;
-        fuel.maxValue = initialFuel;
-        fuel.value = initialFuel;
+        initialRectX = fuel.parent.GetComponent<RectTransform>().sizeDelta.x;
+        initialRectY = fuel.sizeDelta.y;
+        fuel.sizeDelta = new Vector2(initialRectX, initialRectY);
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        while (fuel.value > 0)
-        {
-            fuel.value -= rocket.massBurnRate * Time.fixedDeltaTime * rocket.currentThrust / 100;
-        }
+        deltaV = (rocket.engineThrust / (rocket.engineBurnTime * planet.gravity) * planet.gravity) * (Mathf.Log(rocket.totalMass / rocket.emptyTotalMass)) * 1000;
+        currentFuel = rocket.currentFuelRatio;
+        fuel.sizeDelta = new Vector2(initialRectX * currentFuel, initialRectY);
     }
 }

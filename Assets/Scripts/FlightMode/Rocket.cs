@@ -7,7 +7,7 @@ public class Rocket : MonoBehaviour
 {
     public Rigidbody rocketRigidbody;
     public float coreMass, tankMass, emptyTankMass, engineMass;
-    public float totalMass, emptyTotalMass;
+    public float totalMass, emptyTotalMass, currentFuelRatio;
     public float currentThrust, engineThrust, engineBurnTime;
     public float massBurnRate;
     public float rotationSpeed = 5f;
@@ -18,6 +18,7 @@ public class Rocket : MonoBehaviour
     public bool isStageActive = false;
     public Text throttle;
     public GameObject navball;
+    float initialFuel, currentFuel;
 
     private void Awake()
     {
@@ -48,12 +49,15 @@ public class Rocket : MonoBehaviour
         emptyTotalMass = coreMass + emptyTankMass + engineMass;
         massBurnRate = (totalMass - emptyTotalMass) / engineBurnTime;
         rocketRigidbody.mass = totalMass;
+        initialFuel = totalMass - emptyTotalMass;
     }
 
     void UpdateMass(float dt)
     {
         if (totalMass <= emptyTotalMass) return;
         totalMass -= massBurnRate * dt * currentThrust / 100;
+        currentFuel = totalMass - emptyTotalMass;
+        currentFuelRatio = currentFuel / initialFuel;
         rocketRigidbody.mass = Mathf.Max(totalMass, emptyTotalMass);
     }
 
