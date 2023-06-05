@@ -6,8 +6,8 @@ public class RocketPartActions : MonoBehaviour
 {
     public float distanceToSnap = 0.5f;
     GameObject rocketParent;
-    Vector3 rocketUpNode;
-    Vector3 rocketDownNode;
+    public Vector3 rocketUpNode;
+    public Vector3 rocketDownNode;
     public GameObject cursor;
     public GameObject stageEmptyPrefab;
     public StageManager stages;
@@ -18,7 +18,6 @@ public class RocketPartActions : MonoBehaviour
     void Start()
     {
         stages.stages = new List<List<GameObject>>();
-        rocketParent = GameObject.Find("Rocket").transform.GetChild(0).gameObject;
     }
 
     public void AddPart(GameObject part)
@@ -42,6 +41,12 @@ public class RocketPartActions : MonoBehaviour
 
     void Update()
     {
+        rocketParent = GameObject.Find("Rocket").transform.GetChild(0).gameObject;
+        if(rocketParent.transform.childCount > 0)
+        {
+            rocketUpNode = rocketParent.transform.GetChild(0).GetChild(0).GetChild(0).transform.position;
+            rocketDownNode = rocketParent.transform.GetChild(rocketParent.transform.childCount - 1).GetChild(rocketParent.transform.GetChild(rocketParent.transform.childCount - 1).childCount - 1).GetChild(1).transform.position;
+        }
         cursor.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
         if (Input.GetMouseButtonDown(0) && cursor.transform.childCount > 0)
         {
@@ -63,8 +68,8 @@ public class RocketPartActions : MonoBehaviour
                 tempObject.transform.SetParent(rocketParent.transform.GetChild(currentStage).transform);
                 rocketDownNode = tempObjectDownNode;
                 stages.stages[currentStage].Add(tempObject);
-                if (tempObject.tag == "Engine")
-                    PrintList(stages.stages);
+                //if (tempObject.tag == "Engine")
+                    //PrintList(stages.stages);
             }
             if (Vector3.Distance(tempObjectDownNode, rocketUpNode) <= distanceToSnap && canPlaceAbove)
             {

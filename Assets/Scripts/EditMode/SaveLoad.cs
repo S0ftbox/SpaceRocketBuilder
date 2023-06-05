@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,9 +30,14 @@ public class RocketData
 public class SaveLoad : MonoBehaviour
 {
     public Button save, load;
+    public InputField rocketInputName;
     public GameObject empty, node, stage;
     GameObject rocket;
     public PartsList partsList;
+    public StageManager stages;
+    public RocketPartActions actions;
+    int stageCount;
+    string rocketName;
 
     void Start()
     {
@@ -43,7 +48,8 @@ public class SaveLoad : MonoBehaviour
     {
         if(rocket != null)
         {
-            save.onClick.AddListener(() => SaveRocketToFile(rocket, "Assets/SavedRockets/untitled.bin"));
+            rocketName = rocketInputName.text;
+            save.onClick.AddListener(() => SaveRocketToFile(rocket, "Assets/SavedRockets/"+rocketName+".bin"));
         }
         //save.onClick.RemoveAllListeners();
 
@@ -58,7 +64,7 @@ public class SaveLoad : MonoBehaviour
         savedRocket.positionX = rocketParent.transform.position.x;
         savedRocket.positionY = rocketParent.transform.position.y;
         savedRocket.positionZ = rocketParent.transform.position.z;
-        savedRocket.prefabPath = PrefabStageUtility.GetCurrentPrefabStage()?.assetPath;
+        //savedRocket.prefabPath = PrefabStageUtility.GetCurrentPrefabStage()?.assetPath;
 
         savedRocket.children = new List<RocketData>();
         foreach (Transform child in rocketParent.transform)
@@ -79,7 +85,7 @@ public class SaveLoad : MonoBehaviour
         Debug.Log(childData.name.Length);
         //childData.name = childData.name.Remove(childData.name.Length - 7);
         childData.tag = rocketChild.tag;
-        childData.prefabPath = PrefabStageUtility.GetCurrentPrefabStage()?.assetPath;
+        //childData.prefabPath = PrefabStageUtility.GetCurrentPrefabStage()?.assetPath;
         childData.positionX = rocketChild.transform.position.x;
         childData.positionY = rocketChild.transform.position.y;
         childData.positionZ = rocketChild.transform.position.z;
@@ -126,17 +132,21 @@ public class SaveLoad : MonoBehaviour
         FileStream rocketFile = File.Open(filePath, FileMode.Open);
         RocketData rocketData = (RocketData)bf.Deserialize(rocketFile);
         rocketFile.Close();
-        GameObject savedRocket = Instantiate(empty);
-        savedRocket.transform.SetParent(GameObject.Find("Rocket").transform);
-        savedRocket.name = rocketData.name;
-        savedRocket.transform.position = new Vector3(rocketData.positionX, rocketData.positionY, rocketData.positionZ);
-        
-        foreach(RocketData childData in rocketData.children)
+        if(GameObject.Find("Rocket").transform.childCount == 0)
         {
-            LoadRocketChild(childData, savedRocket.transform);
+            GameObject savedRocket = Instantiate(empty);
+            savedRocket.transform.SetParent(GameObject.Find("Rocket").transform);
+            savedRocket.name = rocketData.name;
+            savedRocket.transform.position = new Vector3(rocketData.positionX, rocketData.positionY, rocketData.positionZ);
+
+            foreach (RocketData childData in rocketData.children)
+            {
+                LoadRocketChild(childData, savedRocket.transform);
+            }
+            return savedRocket;
         }
 
-        return savedRocket;
+        return null;
     }
 
     void LoadRocketChild(RocketData childData, Transform parentTransform)
@@ -148,13 +158,16 @@ public class SaveLoad : MonoBehaviour
         }
         else if (childData.tag == "Stage")
         {
+            stages.stages.Add(new List<GameObject>());
             rocketChild = Instantiate(stage);
+            stageCount++;
         }
         else
         {
             Debug.Log(childData.name);
             GameObject partToInstantiate = partsList.getPrefab(childData.name);
             rocketChild = Instantiate(partToInstantiate);
+            stages.stages[stageCount-1].Add(partToInstantiate);
         }
         rocketChild.name = childData.name;
         rocketChild.transform.SetParent(parentTransform);
@@ -170,15 +183,4 @@ public class SaveLoad : MonoBehaviour
             LoadRocketChild(grandchild, rocketChild.transform);
         }
     }
-
-    /*public void SaveObject(GameObject objectToSave, string savePath)
-    {
-        GameObject savedPrefab = PrefabUtility.SaveAsPrefabAsset(objectToSave, savePath);
-    }
-
-    public void LoadObject(string loadPath)
-    {
-        GameObject loadedPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(loadPath);
-        GameObject innstantiatedPrefab = Instantiate(loadedPrefab);
-    }*/
 }
