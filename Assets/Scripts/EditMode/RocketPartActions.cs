@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class RocketPartActions : MonoBehaviour
 {
@@ -59,8 +60,13 @@ public class RocketPartActions : MonoBehaviour
                 currentStage = stages.stages.Count - 1;
                 Vector3 tempDistanceUp = tempObjectUpNode - tempObject.transform.position;
                 tempObject.transform.position = new Vector3(rocketParent.transform.position.x, rocketDownNode.y - tempDistanceUp.y, rocketParent.transform.position.z);
-                if (tempObject.tag == "Engine")
+                if (tempObject.tag == "Separator")
                 {
+                    string lastPart = stages.stages[currentStage].Last().name;
+                    if(lastPart == "LiquidEngineBig_1.25m" || lastPart == "LiquidEngineBig_1.25m(Clone)")
+                        tempObject.transform.GetChild(3).gameObject.SetActive(true);
+                    else if (lastPart == "LiquidEngineSmall_1.25m" || lastPart == "LiquidEngineSmall_1.25m(Clone)")
+                        tempObject.transform.GetChild(4).gameObject.SetActive(true);
                     Instantiate(stageEmptyPrefab, rocketParent.transform);
                     stages.stages.Add(new List<GameObject>());
                     currentStage++;
@@ -90,20 +96,6 @@ public class RocketPartActions : MonoBehaviour
                 rocketUpNode = tempObjectUpNode;
                 stages.stages[currentStage].Insert(0, currentPart);
             }
-        }
-    }
-
-    void PrintList(List<List<GameObject>> stages)
-    {
-        int i = 0;
-        foreach(List<GameObject> inner in stages)
-        {
-            Debug.Log("Stage " + i);
-            foreach(GameObject gO in inner)
-            {
-                Debug.Log(gO.name + " " + i);
-            }
-            i++;
         }
     }
 }
