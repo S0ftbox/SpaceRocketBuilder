@@ -27,6 +27,8 @@ public class OrbitParameters : MonoBehaviour
 
     void Start()
     {
+        rocket = GameObject.FindGameObjectWithTag("Rocket").transform.GetChild(0).gameObject;
+        planet = GameObject.Find("Planet");
         rocketRb = rocket.GetComponent<Rigidbody>();
         planetRb = planet.GetComponent<Rigidbody>();
         u = 0.1f * (rocketRb.mass + planetRb.mass);

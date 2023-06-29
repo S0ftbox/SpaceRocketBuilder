@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Staging : MonoBehaviour
 {
-    public Rocket rocket;
+    Rocket rocket;
     public RectTransform fuel;
     public float deltaV;
     float currentFuel;
@@ -14,6 +14,7 @@ public class Staging : MonoBehaviour
 
     void Start()
     {
+        rocket = GameObject.FindGameObjectWithTag("Rocket").transform.GetChild(0).gameObject.GetComponent<Rocket>();
         initialRectX = fuel.parent.GetComponent<RectTransform>().sizeDelta.x;
         initialRectY = fuel.sizeDelta.y;
         fuel.sizeDelta = new Vector2(initialRectX, initialRectY);

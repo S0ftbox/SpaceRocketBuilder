@@ -6,9 +6,14 @@ using UnityEngine.UI;
 public class Altitude : MonoBehaviour
 {
     public Text altitude;
-    public GameObject rocket, planet;
+    GameObject rocket;
+    public GameObject planet;
     float altitudeValue;
 
+    void Start()
+    {
+        rocket = GameObject.FindGameObjectWithTag("Rocket").transform.GetChild(0).gameObject;
+    }
 
     void Update()
     {

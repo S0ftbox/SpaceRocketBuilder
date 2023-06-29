@@ -6,12 +6,13 @@ using UnityEngine.UI;
 public class Velocity : MonoBehaviour
 {
     public Text velocity;
-    public GameObject rocket;
+    GameObject rocket;
     float velocityVal;
     Vector3 previousLocation;
 
     void Start()
     {
+        rocket = GameObject.FindGameObjectWithTag("Rocket").transform.GetChild(0).gameObject;
         previousLocation = rocket.transform.position;
     }
 

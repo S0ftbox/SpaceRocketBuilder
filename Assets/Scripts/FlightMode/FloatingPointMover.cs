@@ -1,28 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FloatingPointMover : MonoBehaviour
 {
     Vector3 distanceFromMapCenter;
+    GameObject rocket;
     GameObject[] movableGameObjects;
 
-    void Start()
+    void Awake()
     {
         movableGameObjects = GameObject.FindGameObjectsWithTag("FloatingPointMovable");
     }
 
+    void Start()
+    {
+        rocket = GameObject.FindGameObjectWithTag("Rocket").transform.GetChild(0).gameObject;
+    }
+
     void Update()
     {
-        distanceFromMapCenter = transform.position - new Vector3(0, 0, 0);
-        if(distanceFromMapCenter.magnitude > 100)
+        if(SceneManager.GetActiveScene().name == "FlightMode")
         {
-            
-            for(int i = 0; i < movableGameObjects.Length; i++)
+            distanceFromMapCenter = rocket.transform.position - new Vector3(0, 0, 0);
+            if (distanceFromMapCenter.magnitude > 100)
             {
-                movableGameObjects[i].transform.position -= transform.position;
+
+                for (int i = 0; i < movableGameObjects.Length; i++)
+                {
+                    movableGameObjects[i].transform.position -= rocket.transform.position;
+                }
+                rocket.transform.position = new Vector3(0, 0, 0);
             }
-            transform.position = new Vector3(0, 0, 0);
         }
     }
 }
