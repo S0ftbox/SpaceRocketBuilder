@@ -11,6 +11,7 @@ public class SwitchTabs : MonoBehaviour
     public GameObject prefabButton;
     public RectTransform parentTab;
     public RocketPartActions partActions;
+    float width;
 
     void Awake()
     {
@@ -20,6 +21,8 @@ public class SwitchTabs : MonoBehaviour
         solidEngine = GameObject.Find("SolidFuelEnginesButton").GetComponent<Button>();
         separator = GameObject.Find("SeparatorsButton").GetComponent<Button>();
         chute = GameObject.Find("ChutesButton").GetComponent<Button>();
+        width = parentTab.rect.width;
+        parentTab.GetComponent<GridLayoutGroup>().cellSize = new Vector2(width / 3, width / 3);
     }
 
     // Start is called before the first frame update
