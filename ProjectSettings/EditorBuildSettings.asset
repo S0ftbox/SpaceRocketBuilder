@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/SpaceCenter.unity
+    guid: 0396d4ee2cf9dfc45b5b056f2b08de87
+  - enabled: 1
     path: Assets/Scenes/EditMode.unity
     guid: 43daf719724ab914fb4fc788e0e40b70
   - enabled: 1

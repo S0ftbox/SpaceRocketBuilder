@@ -96,6 +96,7 @@ public class RocketPartActions : MonoBehaviour
                 rocketUpNode = tempObjectUpNode;
                 stages.stages[currentStage].Insert(0, currentPart);
             }
+            rocketParent.GetComponent<Rocket>().isInitialDataSet = false;
         }
     }
 }

@@ -19,7 +19,7 @@ public class Rocket : MonoBehaviour
     public bool isStageActive = false;
     public string throttle;
     float initialFuel, currentFuel;
-    bool isInitialDataSet = false;
+    public bool isInitialDataSet = false;
     
     void UpdateMass(float dt)
     {

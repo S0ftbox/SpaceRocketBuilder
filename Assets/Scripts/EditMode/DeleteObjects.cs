@@ -24,6 +24,7 @@ public class DeleteObjects : MonoBehaviour
             DestroyImmediate(parent.transform.GetChild(0).gameObject);
         }
         GameObject root = Instantiate(rootPrefab);
+        root.name = root.name.Remove(root.name.Length - 7);
         root.transform.SetParent(parent.transform);
         rocketName.text = "";
     }
