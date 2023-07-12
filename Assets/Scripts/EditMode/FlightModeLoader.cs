@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class FlightModeLoader : MonoBehaviour
 {
     public InputField rocketInputName;
+    public GameObject parent;
     public SaveLoad saveLoad;
     public Button launchBtn, backBtn;
 
@@ -28,6 +29,10 @@ public class FlightModeLoader : MonoBehaviour
 
     void LoadSpaceCenter()
     {
+        if (parent.transform.childCount > 0)
+        {
+            DestroyImmediate(parent.transform.GetChild(0).gameObject);
+        }
         SceneManager.LoadScene("SpaceCenter");
     }
 }

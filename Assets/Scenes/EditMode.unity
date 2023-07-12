@@ -1004,6 +1004,7 @@ GameObject:
   - component: {fileID: 718324784}
   - component: {fileID: 718324783}
   - component: {fileID: 718324785}
+  - component: {fileID: 718324786}
   m_Layer: 0
   m_Name: BuildManager
   m_TagString: Untagged
@@ -1058,6 +1059,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc42a16ee78d7d4fb1d03b62a7a5606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &718324786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718324782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0e0bbf2a820fa448a1ae6e006e775a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursor: {fileID: 1798711276}
+  partActions: {fileID: 718324783}
 --- !u!1 &738605865
 GameObject:
   m_ObjectHideFlags: 0
@@ -2510,6 +2525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rocketInputName: {fileID: 1647967008}
+  parent: {fileID: 5587807992348487616}
   saveLoad: {fileID: 1679533790}
   launchBtn: {fileID: 1603400893}
   backBtn: {fileID: 1484608582}
@@ -2575,7 +2591,7 @@ MonoBehaviour:
   parent: {fileID: 699203992}
   rootPrefab: {fileID: 5587807991185142198, guid: 447f5a8a1be26dc41b3cd24fc8900cd2,
     type: 3}
-  rocketName: {fileID: 0}
+  rocketName: {fileID: 1647967008}
   removeButton: {fileID: 1265411860}
 --- !u!114 &1265411860
 MonoBehaviour:
@@ -4827,3 +4843,9 @@ PrefabInstance:
     - {fileID: 3349021642046795921, guid: 447f5a8a1be26dc41b3cd24fc8900cd2, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 447f5a8a1be26dc41b3cd24fc8900cd2, type: 3}
+--- !u!1 &5587807992348487616 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5587807991185142198, guid: 447f5a8a1be26dc41b3cd24fc8900cd2,
+    type: 3}
+  m_PrefabInstance: {fileID: 5587807992348487615}
+  m_PrefabAsset: {fileID: 0}

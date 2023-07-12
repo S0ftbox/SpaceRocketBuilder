@@ -6,4 +6,5 @@ public class CoreData : MonoBehaviour
 {
     public float mass;
     public bool isManned;
+    public int crewCount;
 }
