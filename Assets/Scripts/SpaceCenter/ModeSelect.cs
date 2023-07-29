@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,6 +19,7 @@ public class ModeSelect : MonoBehaviour
     public Button cancel, load, delete;
     public PartsList partsList;
     public StageManager stages;
+    public GameObject loadingScreen, loadingIndicator;
     bool isHovering;
     int stageCount;
     string selectedFilePath;
@@ -60,7 +62,7 @@ public class ModeSelect : MonoBehaviour
             {
                 if (gameObject.name == "VAB")
                 {
-                    SceneManager.LoadScene("EditMode");
+                    AsyncLoadScene("EditMode");
                 }
                 if(gameObject.name == "LaunchPad")
                 {
@@ -132,9 +134,7 @@ public class ModeSelect : MonoBehaviour
         //Stage - add new list of GameObjects to StageManager stages (this is needed to modify the loaded rocket later), instantiate the game object using 'stage' prefab and increment the stageCont value
         else if (childData.tag == "Stage")
         {
-            Debug.Log(stages.stages);
             rocketChild = Instantiate(stage);
-            //stages.stages.Add(new List<GameObject>());
             stageCount++;
         }
         //Other tags - create temporary game object by searching the PartsList structure using getPrefab method, then instantiate this game object and add it to a StageManager stages list
@@ -228,6 +228,23 @@ public class ModeSelect : MonoBehaviour
     void LoadFlightMode()
     {
         LoadRocketFromFile(selectedFilePath);
-        SceneManager.LoadScene("FlightMode");
+        AsyncLoadScene("FlightMode");
+    }
+
+    public async void AsyncLoadScene(string sceneName)
+    {
+        var scene = SceneManager.LoadSceneAsync(sceneName);
+        scene.allowSceneActivation = false;
+
+        loadingScreen.SetActive(true);
+
+        do
+        {
+            await Task.Delay(1);
+            loadingIndicator.transform.Rotate(0, 0, 5);
+        } while (scene.progress < 0.9f);
+
+        scene.allowSceneActivation = true;
+        loadingScreen.SetActive(false);
     }
 }

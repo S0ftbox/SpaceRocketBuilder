@@ -82,7 +82,7 @@ public class RocketPartActions : MonoBehaviour
                 currentStage = 0;
                 Vector3 tempDistanceDown = tempObjectDownNode - tempObject.transform.position;
                 tempObject.transform.position = new Vector3(rocketParent.transform.position.x, rocketUpNode.y - tempDistanceDown.y, rocketParent.transform.position.z);
-                if (tempObject.tag == "Engine")
+                if (tempObject.tag == "Separator")
                 {
                     Instantiate(stageEmptyPrefab, rocketParent.transform);
                     stages.stages.Insert(0, new List<GameObject>());
@@ -97,6 +97,7 @@ public class RocketPartActions : MonoBehaviour
                 stages.stages[currentStage].Insert(0, currentPart);
             }
             rocketParent.GetComponent<Rocket>().isInitialDataSet = false;
+            rocketParent.transform.GetChild(currentStage).GetComponent<StageData>().isDataUpdated = false;
         }
     }
 }

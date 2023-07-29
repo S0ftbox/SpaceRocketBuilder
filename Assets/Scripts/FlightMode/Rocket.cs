@@ -7,19 +7,18 @@ using UnityEngine.SceneManagement;
 public class Rocket : MonoBehaviour
 {
     public Rigidbody rocketRigidbody;
-    public float coreMass, tankMass, emptyTankMass, engineMass;
     public float totalMass, emptyTotalMass, currentFuelRatio;
     public float currentThrust, engineThrust, engineBurnTime;
     public float massBurnRate;
     public float rotationSpeed = 20f;
     public float pitch, roll, yaw;
-    public GameObject[] cores;
-    public GameObject[] tanks;
-    public GameObject[] engines;
     public bool isStageActive = false;
+    public bool isStageSolidFuel = false;
     public string throttle;
     float initialFuel, currentFuel;
     public bool isInitialDataSet = false;
+    public bool hasCoreModule = false;
+    public int totalStageCount, currentStage;
     
     void UpdateMass(float dt)
     {
@@ -47,54 +46,73 @@ public class Rocket : MonoBehaviour
     {
         if(this.transform.childCount > 0 && !isInitialDataSet)
         {
-            cores = GameObject.FindGameObjectsWithTag("Core");
-            tanks = GameObject.FindGameObjectsWithTag("Fuel");
-            engines = GameObject.FindGameObjectsWithTag("Engine");
-
-            foreach (GameObject core in cores)
+            for(int i = 0; i < transform.childCount-1; i++)
             {
-                coreMass += core.GetComponent<CoreData>().mass;
+                totalMass += transform.GetChild(i).GetComponent<StageData>().totalMass;
+                emptyTotalMass += transform.GetChild(i).GetComponent<StageData>().totalMass;
+                if (transform.GetChild(i).GetComponent<StageData>().hasCoreModule)
+                {
+                    hasCoreModule = true;
+                }
             }
-            foreach (GameObject tank in tanks)
+            totalMass += transform.GetChild(transform.childCount - 1).GetComponent<StageData>().totalMass;
+            emptyTotalMass += transform.GetChild(transform.childCount - 1).GetComponent<StageData>().dryMass;
+            engineThrust = transform.GetChild(transform.childCount - 1).GetComponent<StageData>().thrustPower;
+            engineBurnTime = transform.GetChild(transform.childCount - 1).GetComponent<StageData>().burnRate;
+            if (transform.GetChild(transform.childCount - 1).GetComponent<StageData>().hasCoreModule)
             {
-                tankMass += tank.GetComponent<TankData>().currentMass;
-                emptyTankMass += tank.GetComponent<TankData>().dryMass;
-            }
-            foreach (GameObject engine in engines)
-            {
-                engineMass += engine.GetComponent<EngineData>().mass;
-                engineThrust = engine.GetComponent<EngineData>().thrustPower;
-                engineBurnTime = engine.GetComponent<EngineData>().burnRate;
+                hasCoreModule = true;
             }
 
-            totalMass = coreMass + tankMass + engineMass;
-            emptyTotalMass = coreMass + emptyTankMass + engineMass;
             massBurnRate = (totalMass - emptyTotalMass) / engineBurnTime;
             rocketRigidbody.mass = totalMass;
             initialFuel = totalMass - emptyTotalMass;
+            totalStageCount = transform.childCount;
+            currentStage = totalStageCount;
             isInitialDataSet = true;
         }
 
-        if (SceneManager.GetActiveScene().name == "FlightMode")
+        if (SceneManager.GetActiveScene().name == "FlightMode" && hasCoreModule)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-                isStageActive = true;
+            if (Input.GetKeyDown(KeyCode.Space) && totalStageCount > 0)
+            {
+                if(currentStage != totalStageCount && currentStage != 0)
+                {
+                    //stage separation
+                    transform.GetChild(currentStage).GetComponent<StageData>().startVelocity = GetComponent<Rigidbody>().velocity;
+                    transform.GetChild(currentStage).GetComponent<StageData>().startAngularVelocity = GetComponent<Rigidbody>().angularVelocity;
+                    transform.GetChild(currentStage).parent = null;
+                }
+                transform.GetChild(currentStage - 1).GetComponent<StageData>().isStageActive = true;
+                isStageActive = transform.GetChild(currentStage - 1).GetComponent<StageData>().isStageActive;
+                emptyTotalMass += transform.GetChild(currentStage - 1).GetComponent<StageData>().dryMass;
+                engineThrust = transform.GetChild(currentStage - 1).GetComponent<StageData>().thrustPower;
+                currentStage -= 1;
+            }
+                
+            if(engineThrust != 0)
+            {
+                if (Input.GetKeyDown(KeyCode.Z) && !isStageSolidFuel)
+                    currentThrust = engineThrust;
+                if (Input.GetKeyDown(KeyCode.X) && !isStageSolidFuel)
+                    currentThrust = 0;
+                if (Input.GetKey(KeyCode.LeftShift) && currentThrust < engineThrust && !isStageSolidFuel)
+                    currentThrust += engineThrust * 0.025f;
+                if (Input.GetKey(KeyCode.LeftControl) && currentThrust > 0 && !isStageSolidFuel)
+                    currentThrust -= engineThrust * 0.025f;
+                if (currentThrust < 0)
+                    currentThrust = 0;
+                if (currentThrust > engineThrust)
+                    currentThrust = engineThrust;
 
-            if (Input.GetKeyDown(KeyCode.Z))
-                currentThrust = engineThrust;
-            if (Input.GetKeyDown(KeyCode.X))
+                float throttleVal = currentThrust / engineThrust * 100;
+                throttle = throttleVal.ToString("n0") + " %";
+            }
+            else
+            {
+                throttle = "0%";
                 currentThrust = 0;
-            if (Input.GetKey(KeyCode.LeftShift) && currentThrust < engineThrust)
-                currentThrust += engineThrust * 0.025f;
-            if (Input.GetKey(KeyCode.LeftControl) && currentThrust > 0)
-                currentThrust -= engineThrust * 0.025f;
-            if (currentThrust < 0)
-                currentThrust = 0;
-            if (currentThrust > engineThrust)
-                currentThrust = engineThrust;
-
-            float throttleVal = currentThrust / engineThrust * 100;
-            throttle = throttleVal.ToString("n0") + " %";
+            }
         }
     }
 
