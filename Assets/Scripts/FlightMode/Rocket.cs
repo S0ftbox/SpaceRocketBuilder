@@ -18,7 +18,7 @@ public class Rocket : MonoBehaviour
     float initialFuel, currentFuel;
     public bool isInitialDataSet = false;
     public bool hasCoreModule = false;
-    public int totalStageCount, currentStage;
+    public int totalStageCount, currentStage, totalCrewCount;
     
     void UpdateMass(float dt)
     {
@@ -42,6 +42,14 @@ public class Rocket : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if(SceneManager.GetActiveScene().name == "FlightMode")
+        {
+            WaitSecond();
+        }
+    }
+
     private void Update()
     {
         if(this.transform.childCount > 0 && !isInitialDataSet)
@@ -53,6 +61,7 @@ public class Rocket : MonoBehaviour
                 if (transform.GetChild(i).GetComponent<StageData>().hasCoreModule)
                 {
                     hasCoreModule = true;
+                    totalCrewCount += transform.GetChild(i).GetComponent<StageData>().crewCount;
                 }
             }
             totalMass += transform.GetChild(transform.childCount - 1).GetComponent<StageData>().totalMass;
@@ -62,6 +71,7 @@ public class Rocket : MonoBehaviour
             if (transform.GetChild(transform.childCount - 1).GetComponent<StageData>().hasCoreModule)
             {
                 hasCoreModule = true;
+                totalCrewCount += transform.GetChild(transform.childCount - 1).GetComponent<StageData>().crewCount;
             }
 
             massBurnRate = (totalMass - emptyTotalMass) / engineBurnTime;
@@ -127,8 +137,8 @@ public class Rocket : MonoBehaviour
                 UpdateThrust();
             }
 
-            pitch = Input.GetAxis("Horizontal") * -1;
-            yaw = Input.GetAxis("Vertical") * -1;
+            yaw = Input.GetAxis("Horizontal") * -1;
+            pitch = Input.GetAxis("Vertical") * -1;
             roll = Input.GetAxis("Roll") * -1;
             if (!Mathf.Approximately(pitch, 0f))
             {
@@ -147,5 +157,12 @@ public class Rocket : MonoBehaviour
             }
             rocketRigidbody.freezeRotation = false;
         }
+    }
+
+    IEnumerator WaitSecond()
+    {
+        rocketRigidbody.isKinematic = true;
+        yield return new WaitForSeconds(1);
+        rocketRigidbody.isKinematic = false;
     }
 }

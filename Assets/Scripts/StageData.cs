@@ -7,6 +7,7 @@ public class StageData : MonoBehaviour
     public float dryMass, totalMass;
     public float thrustPower, burnRate;
     public bool hasCoreModule, isDataUpdated, isStageActive;
+    public int crewCount;
     public Vector3 startVelocity, startAngularVelocity;
 
     void Update()
@@ -25,6 +26,10 @@ public class StageData : MonoBehaviour
                     hasCoreModule = true;
                     dryMass += transform.GetChild(i).GetComponent<CoreData>().mass;
                     totalMass += transform.GetChild(i).GetComponent<CoreData>().mass;
+                    if (transform.GetChild(i).GetComponent<CoreData>().isManned)
+                    {
+                        crewCount += transform.GetChild(i).GetComponent<CoreData>().crewCount;
+                    }
                 }
                 if (transform.GetChild(i).tag == "Fuel")
                 {
@@ -57,8 +62,6 @@ public class StageData : MonoBehaviour
             gameObject.AddComponent<Rigidbody>();
             gameObject.GetComponent<Rigidbody>().mass = dryMass;
             gameObject.GetComponent<Rigidbody>().useGravity = false;
-            //gameObject.GetComponent<Rigidbody>().velocity = startVelocity;
-            //gameObject.GetComponent<Rigidbody>().angularVelocity = startAngularVelocity;
         }
     }
 }

@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
     public Transform target;
-    public int scrollScale = 5;
+    public float scrollScale = 5;
     public int rotateScale = 10;
     public float minVertAngle = -80f;
     public float maxVertAngle = 80f;
@@ -25,14 +26,22 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        if(SceneManager.GetActiveScene().name != "FlightMode")
         {
-            offset.z += Input.GetAxis("Mouse ScrollWheel") * scrollScale;
-            offset.z = Mathf.Clamp(offset.z, minOffset, maxOffset);
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                offset.z += Input.GetAxis("Mouse ScrollWheel") * scrollScale;
+                offset.z = Mathf.Clamp(offset.z, minOffset, maxOffset);
+            }
+            else
+            {
+                target.position = target.position + new Vector3(0, Input.GetAxis("Mouse ScrollWheel") * scrollScale, 0);
+            }
         }
         else
         {
-            target.position = target.position + new Vector3(0, Input.GetAxis("Mouse ScrollWheel") * scrollScale, 0);
+            offset.z += Input.GetAxis("Mouse ScrollWheel") * scrollScale;
+            offset.z = Mathf.Clamp(offset.z, minOffset, maxOffset);
         }
 
         if (Input.GetMouseButtonDown(1))
