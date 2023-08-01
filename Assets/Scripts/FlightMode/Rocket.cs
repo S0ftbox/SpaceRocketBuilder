@@ -137,8 +137,8 @@ public class Rocket : MonoBehaviour
                 UpdateThrust();
             }
 
-            yaw = Input.GetAxis("Horizontal") * -1;
-            pitch = Input.GetAxis("Vertical") * -1;
+            pitch = Input.GetAxis("Horizontal") * -1;
+            yaw = Input.GetAxis("Vertical") * -1;
             roll = Input.GetAxis("Roll") * -1;
             if (!Mathf.Approximately(pitch, 0f))
             {

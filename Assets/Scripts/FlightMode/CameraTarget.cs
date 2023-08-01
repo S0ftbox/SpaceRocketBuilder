@@ -5,6 +5,10 @@ using UnityEngine;
 public class CameraTarget : MonoBehaviour
 {
     Transform rocket;
+    public GameObject planet;
+    public float rotationSpeed;
+    Vector3 direction;
+    Quaternion rotation;
 
     void Start()
     {
@@ -14,5 +18,8 @@ public class CameraTarget : MonoBehaviour
     void Update()
     {
         transform.position = rocket.position;
+        direction = (planet.transform.position - transform.position).normalized;
+        rotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
     }
 }

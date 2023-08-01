@@ -9,6 +9,7 @@ public class StageData : MonoBehaviour
     public bool hasCoreModule, isDataUpdated, isStageActive;
     public int crewCount;
     public Vector3 startVelocity, startAngularVelocity;
+    FloatingPointMover floatingPointMover;
 
     void Update()
     {
@@ -62,6 +63,10 @@ public class StageData : MonoBehaviour
             gameObject.AddComponent<Rigidbody>();
             gameObject.GetComponent<Rigidbody>().mass = dryMass;
             gameObject.GetComponent<Rigidbody>().useGravity = false;
+            gameObject.GetComponent<Rigidbody>().velocity = startVelocity;
+            gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward * 0.5f);
+            floatingPointMover = GameObject.Find("FloatingPointManager").GetComponent<FloatingPointMover>();
+            floatingPointMover.movableGameObjects.Add(gameObject);
         }
     }
 }

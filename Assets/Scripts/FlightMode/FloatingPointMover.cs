@@ -7,11 +7,11 @@ public class FloatingPointMover : MonoBehaviour
 {
     Vector3 distanceFromMapCenter;
     GameObject rocket;
-    GameObject[] movableGameObjects;
+    public List<GameObject> movableGameObjects;
 
     void Awake()
     {
-        movableGameObjects = GameObject.FindGameObjectsWithTag("FloatingPointMovable");
+        movableGameObjects.AddRange(GameObject.FindGameObjectsWithTag("FloatingPointMovable"));
     }
 
     void Start()
@@ -27,7 +27,7 @@ public class FloatingPointMover : MonoBehaviour
             if (distanceFromMapCenter.magnitude > 100)
             {
 
-                for (int i = 0; i < movableGameObjects.Length; i++)
+                for (int i = 0; i < movableGameObjects.Count; i++)
                 {
                     movableGameObjects[i].transform.position -= rocket.transform.position;
                 }
