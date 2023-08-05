@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5587807991185142197}
   - component: {fileID: -4501595138910707477}
   - component: {fileID: -8462178843857039628}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Untitled
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,10 +62,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rocketRigidbody: {fileID: -4501595138910707477}
-  coreMass: 0
-  tankMass: 0
-  emptyTankMass: 0
-  engineMass: 0
   totalMass: 0
   emptyTotalMass: 0
   currentFuelRatio: 0
@@ -77,9 +73,11 @@ MonoBehaviour:
   pitch: 0
   roll: 0
   yaw: 0
-  cores: []
-  tanks: []
-  engines: []
   isStageActive: 0
-  throttle: {fileID: 0}
-  navball: {fileID: 0}
+  isStageSolidFuel: 0
+  throttle: 
+  isInitialDataSet: 0
+  hasCoreModule: 0
+  totalStageCount: 0
+  currentStage: 0
+  totalCrewCount: 0

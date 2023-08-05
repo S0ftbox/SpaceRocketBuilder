@@ -5,7 +5,8 @@ using UnityEngine;
 public class Navball : MonoBehaviour
 {
     GameObject rocket;
-    public GameObject planet;
+    GameObject planet;
+    public PlanetTargetSwitch planetSwitch;
 
     void Start()
     {
@@ -14,6 +15,7 @@ public class Navball : MonoBehaviour
 
     void Update()
     {
+        planet = planetSwitch.focusedPlanet.gameObject;
         Vector3 direction = rocket.transform.position - planet.transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
 

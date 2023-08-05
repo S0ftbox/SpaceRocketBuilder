@@ -15,7 +15,7 @@ public class OrbitParameters : MonoBehaviour
     float periapsisArgument;
     float trueAnomaly;
     public GameObject rocket;
-    public GameObject planet;
+    GameObject planet;
     public OrbitPathDraw pathDraw;
     //[Range(1, 100)]
     //public int pathSegments = 50;
@@ -23,6 +23,7 @@ public class OrbitParameters : MonoBehaviour
     Rigidbody planetRb;
     Vector3 velocity;
     public Text semiMajorText, eccentricityText, apoapsisText, periapsisText, inclinationText, ascNodeLongText;
+    public PlanetTargetSwitch planetSwitch;
     //public LineRenderer lineRenderer;
 
     void Start()
@@ -39,6 +40,7 @@ public class OrbitParameters : MonoBehaviour
 
     void FixedUpdate()
     {
+        planet = planetSwitch.focusedPlanet.gameObject;
         Vector3 rocketPosition = rocketRb.position - planetRb.position;
         Vector3 rocketVelocity = rocketRb.velocity;
         float rocketSpeed = rocketVelocity.magnitude;

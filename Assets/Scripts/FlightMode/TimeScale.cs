@@ -11,7 +11,7 @@ public class TimeScale : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Period) && currentTimeScale < 3)
+        if (Input.GetKeyDown(KeyCode.Period) && currentTimeScale < 5)
             currentTimeScale++;
         if (Input.GetKeyDown(KeyCode.Comma) && currentTimeScale > 0)
             currentTimeScale--;

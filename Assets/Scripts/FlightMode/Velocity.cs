@@ -9,17 +9,18 @@ public class Velocity : MonoBehaviour
     GameObject rocket;
     float velocityVal;
     Vector3 previousLocation;
+    public PlanetTargetSwitch planetSwitch;
 
     void Start()
     {
         rocket = GameObject.FindGameObjectWithTag("Rocket").transform.GetChild(0).gameObject;
-        previousLocation = rocket.transform.position;
+        previousLocation = rocket.transform.position - planetSwitch.focusedPlanet.transform.position;
     }
 
     void FixedUpdate()
     {
-        velocityVal = (((rocket.transform.position - previousLocation).magnitude) / Time.fixedDeltaTime) * 100;
+        velocityVal = (((rocket.transform.position - planetSwitch.focusedPlanet.transform.position - previousLocation).magnitude) / Time.fixedDeltaTime) * 100;
         velocity.text = velocityVal.ToString("n1") + " m/s";
-        previousLocation = rocket.transform.position;
+        previousLocation = rocket.transform.position - planetSwitch.focusedPlanet.transform.position;
     }
 }

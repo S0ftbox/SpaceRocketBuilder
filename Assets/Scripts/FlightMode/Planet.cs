@@ -24,6 +24,8 @@ public class Planet : MonoBehaviour
         foreach (Rigidbody obj in objects)
         {
             if (obj == rb) continue; // Skip the current object
+            if (obj.gameObject.name == "Moon") continue;
+            if (obj.gameObject.name == "Planet") continue;
 
             // Calculate the distance and direction between the object and the planet
             Vector3 direction = transform.position - obj.transform.position;

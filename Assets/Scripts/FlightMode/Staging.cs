@@ -10,7 +10,8 @@ public class Staging : MonoBehaviour
     public float deltaV;
     float currentFuel;
     float initialRectX, initialRectY;
-    public Planet planet;
+    Planet planet;
+    public PlanetTargetSwitch planetSwitch;
 
     void Start()
     {
@@ -22,6 +23,7 @@ public class Staging : MonoBehaviour
 
     void Update()
     {
+        planet = planetSwitch.focusedPlanet;
         deltaV = (rocket.engineThrust / (rocket.engineBurnTime * planet.gravity) * planet.gravity) * (Mathf.Log(rocket.totalMass / rocket.emptyTotalMass)) * 1000;
         currentFuel = rocket.currentFuelRatio;
         fuel.sizeDelta = new Vector2(initialRectX * currentFuel, initialRectY);

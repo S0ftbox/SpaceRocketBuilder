@@ -19,7 +19,10 @@ public class Rocket : MonoBehaviour
     public bool isInitialDataSet = false;
     public bool hasCoreModule = false;
     public int totalStageCount, currentStage, totalCrewCount;
-    
+    Vector3 planetVelocity;
+    PlanetTargetSwitch planetTarget;
+
+
     void UpdateMass(float dt)
     {
         if (totalMass <= emptyTotalMass) return;
@@ -44,8 +47,11 @@ public class Rocket : MonoBehaviour
 
     private void Start()
     {
+        planetTarget = GameObject.Find("SOIManager").GetComponent<PlanetTargetSwitch>();
         if(SceneManager.GetActiveScene().name == "FlightMode")
         {
+            planetVelocity = planetTarget.focusedPlanet.GetComponent<Rigidbody>().velocity;
+            rocketRigidbody.constraints = RigidbodyConstraints.FreezeAll;
             WaitSecond();
         }
     }
@@ -86,7 +92,8 @@ public class Rocket : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space) && totalStageCount > 0)
             {
-                if(currentStage != totalStageCount && currentStage != 0)
+                rocketRigidbody.constraints = RigidbodyConstraints.None;
+                if (currentStage != totalStageCount && currentStage != 0)
                 {
                     //stage separation
                     transform.GetChild(currentStage).GetComponent<StageData>().startVelocity = GetComponent<Rigidbody>().velocity;
@@ -130,6 +137,8 @@ public class Rocket : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "FlightMode")
         {
+            Vector3 relativeVelocity = rocketRigidbody.velocity - planetVelocity;//planetTarget.focusedPlanet.gameObject.GetComponent<Rigidbody>().velocity;
+            rocketRigidbody.velocity = relativeVelocity;
             if (isStageActive)
             {
                 UpdateMass(Time.fixedDeltaTime);

@@ -7,6 +7,14 @@ TagManager:
   - Core
   - Fuel
   - Engine
+  - Selectable
+  - Rocket
+  - Node
+  - Stage
+  - Separator
+  - FloatingPointMovable
+  - Navball
+  - Throttle
   layers:
   - Default
   - TransparentFX
@@ -15,8 +23,8 @@ TagManager:
   - Water
   - UI
   - Navball
-  - 
-  - 
+  - Far Render
+  - Rocket
   - 
   - 
   - 
