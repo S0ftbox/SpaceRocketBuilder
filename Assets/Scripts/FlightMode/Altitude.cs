@@ -8,7 +8,8 @@ public class Altitude : MonoBehaviour
     public Text altitude;
     GameObject rocket;
     GameObject planet;
-    float altitudeValue;
+    public float altitudeValue;
+    int planetSeaLevel;
     public PlanetTargetSwitch planetSwitch;
 
     void Start()
@@ -19,7 +20,8 @@ public class Altitude : MonoBehaviour
     void Update()
     {
         planet = planetSwitch.focusedPlanet.gameObject;
-        altitudeValue = (Vector3.Distance(planet.transform.position, rocket.transform.position) - 600) * 100;
+        planetSeaLevel = planetSwitch.focusedPlanet.radius;
+        altitudeValue = (Vector3.Distance(planet.transform.position, rocket.transform.position) - planetSeaLevel) * 100;
         altitude.text = altitudeValue.ToString("n0") + " m";
     }
 }

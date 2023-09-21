@@ -241,10 +241,13 @@ public class ModeSelect : MonoBehaviour
         do
         {
             await Task.Delay(1);
-            loadingIndicator.transform.Rotate(0, 0, 5);
+            if (loadingIndicator != null)
+            {
+                loadingIndicator.GetComponent<Text>().text = scene.progress.ToString();
+            }
         } while (scene.progress < 0.9f);
 
-        scene.allowSceneActivation = true;
         loadingScreen.SetActive(false);
+        scene.allowSceneActivation = true;
     }
 }

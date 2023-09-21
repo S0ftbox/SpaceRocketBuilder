@@ -7,6 +7,10 @@ public class Planet : MonoBehaviour
     public float gravity = 10f; // Gravitational acceleration value
     public float maxDistance = 1000f; // Maximum distance for gravitational effect
     public float force;
+    public int radius;
+    public bool hasAtmosphere;
+    public int atmosphereLimit;
+    public float airDensityAtSeaLevel;
 
     private Rigidbody rb;
 

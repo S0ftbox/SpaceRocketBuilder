@@ -15,13 +15,17 @@ public class Rocket : MonoBehaviour
     public bool isStageActive = false;
     public bool isStageSolidFuel = false;
     public string throttle;
-    float initialFuel, currentFuel;
+    float initialFuel, currentFuel, airDensity;
+    int planetSeaLevel;
+    public float dragCoefficient = 0.5f;
+    public float currentAltitude;
     public bool isInitialDataSet = false;
     public bool hasCoreModule = false;
+    public bool isInAtmosphere;
     public int totalStageCount, currentStage, totalCrewCount;
-    Vector3 planetVelocity;
-    PlanetTargetSwitch planetTarget;
-
+    public Vector3 planetVelocity, dragForce;
+    public GameObject planetTarget;
+    public Planet currentPlanet;
 
     void UpdateMass(float dt)
     {
@@ -47,10 +51,11 @@ public class Rocket : MonoBehaviour
 
     private void Start()
     {
-        planetTarget = GameObject.Find("SOIManager").GetComponent<PlanetTargetSwitch>();
+        planetTarget = GameObject.Find("SOIManager");
         if(SceneManager.GetActiveScene().name == "FlightMode")
         {
-            planetVelocity = planetTarget.focusedPlanet.GetComponent<Rigidbody>().velocity;
+            currentPlanet = planetTarget.GetComponent<PlanetTargetSwitch>().focusedPlanet;
+            planetVelocity = currentPlanet.GetComponent<Rigidbody>().velocity;
             rocketRigidbody.constraints = RigidbodyConstraints.FreezeAll;
             WaitSecond();
         }
@@ -88,47 +93,61 @@ public class Rocket : MonoBehaviour
             isInitialDataSet = true;
         }
 
-        if (SceneManager.GetActiveScene().name == "FlightMode" && hasCoreModule)
+        if(SceneManager.GetActiveScene().name == "FlightMode")
         {
-            if (Input.GetKeyDown(KeyCode.Space) && totalStageCount > 0)
+            planetTarget = GameObject.Find("SOIManager");
+            if (currentPlanet != planetTarget.GetComponent<PlanetTargetSwitch>().focusedPlanet)
             {
-                rocketRigidbody.constraints = RigidbodyConstraints.None;
-                if (currentStage != totalStageCount && currentStage != 0)
+                currentPlanet = planetTarget.GetComponent<PlanetTargetSwitch>().focusedPlanet;
+            }
+            if (hasCoreModule)
+            {
+                if (Input.GetKeyDown(KeyCode.Space) && totalStageCount > 0)
                 {
-                    //stage separation
-                    transform.GetChild(currentStage).GetComponent<StageData>().startVelocity = GetComponent<Rigidbody>().velocity;
-                    transform.GetChild(currentStage).GetComponent<StageData>().startAngularVelocity = GetComponent<Rigidbody>().angularVelocity;
-                    transform.GetChild(currentStage).parent = null;
+                    rocketRigidbody.constraints = RigidbodyConstraints.None;
+                    if (currentStage != totalStageCount && currentStage != 0)
+                    {
+                        //stage separation
+                        transform.GetChild(currentStage).GetComponent<StageData>().startVelocity = GetComponent<Rigidbody>().velocity;
+                        transform.GetChild(currentStage).GetComponent<StageData>().startAngularVelocity = GetComponent<Rigidbody>().angularVelocity;
+                        float tmpMass = totalMass - emptyTotalMass;
+                        emptyTotalMass -= transform.GetChild(currentStage).GetComponent<StageData>().dryMass;
+                        emptyTotalMass += transform.GetChild(currentStage-1).GetComponent<StageData>().dryMass;
+                        emptyTotalMass -= transform.GetChild(currentStage - 1).GetComponent<StageData>().totalMass;
+                        totalMass -= transform.GetChild(currentStage).GetComponent<StageData>().dryMass;
+                        totalMass -= tmpMass;
+                        initialFuel = totalMass - emptyTotalMass;
+                        transform.GetChild(currentStage).parent = null;
+                    }
+                    transform.GetChild(currentStage - 1).GetComponent<StageData>().isStageActive = true;
+                    isStageActive = transform.GetChild(currentStage - 1).GetComponent<StageData>().isStageActive;
+                    engineThrust = transform.GetChild(currentStage - 1).GetComponent<StageData>().thrustPower;
+                    currentStage -= 1;
                 }
-                transform.GetChild(currentStage - 1).GetComponent<StageData>().isStageActive = true;
-                isStageActive = transform.GetChild(currentStage - 1).GetComponent<StageData>().isStageActive;
-                emptyTotalMass += transform.GetChild(currentStage - 1).GetComponent<StageData>().dryMass;
-                engineThrust = transform.GetChild(currentStage - 1).GetComponent<StageData>().thrustPower;
-                currentStage -= 1;
-            }
-                
-            if(engineThrust != 0)
-            {
-                if (Input.GetKeyDown(KeyCode.Z) && !isStageSolidFuel)
-                    currentThrust = engineThrust;
-                if (Input.GetKeyDown(KeyCode.X) && !isStageSolidFuel)
-                    currentThrust = 0;
-                if (Input.GetKey(KeyCode.LeftShift) && currentThrust < engineThrust && !isStageSolidFuel)
-                    currentThrust += engineThrust * 0.025f;
-                if (Input.GetKey(KeyCode.LeftControl) && currentThrust > 0 && !isStageSolidFuel)
-                    currentThrust -= engineThrust * 0.025f;
-                if (currentThrust < 0)
-                    currentThrust = 0;
-                if (currentThrust > engineThrust)
-                    currentThrust = engineThrust;
 
-                float throttleVal = currentThrust / engineThrust * 100;
-                throttle = throttleVal.ToString("n0") + " %";
-            }
-            else
-            {
-                throttle = "0%";
-                currentThrust = 0;
+                if (engineThrust != 0)
+                {
+                    if (Input.GetKeyDown(KeyCode.Z) && !isStageSolidFuel)
+                        currentThrust = engineThrust;
+                    if (Input.GetKeyDown(KeyCode.X) && !isStageSolidFuel)
+                        currentThrust = 0;
+                    if (Input.GetKey(KeyCode.LeftShift) && currentThrust < engineThrust && !isStageSolidFuel)
+                        currentThrust += engineThrust * 0.025f;
+                    if (Input.GetKey(KeyCode.LeftControl) && currentThrust > 0 && !isStageSolidFuel)
+                        currentThrust -= engineThrust * 0.025f;
+                    if (currentThrust < 0)
+                        currentThrust = 0;
+                    if (currentThrust > engineThrust)
+                        currentThrust = engineThrust;
+
+                    float throttleVal = currentThrust / engineThrust * 100;
+                    throttle = throttleVal.ToString("n0") + " %";
+                }
+                else
+                {
+                    throttle = "0%";
+                    currentThrust = 0;
+                }
             }
         }
     }
@@ -139,6 +158,22 @@ public class Rocket : MonoBehaviour
         {
             Vector3 relativeVelocity = rocketRigidbody.velocity - planetVelocity;//planetTarget.focusedPlanet.gameObject.GetComponent<Rigidbody>().velocity;
             rocketRigidbody.velocity = relativeVelocity;
+            if (currentPlanet.hasAtmosphere)
+            {
+                planetSeaLevel = currentPlanet.radius;
+                currentAltitude = (Vector3.Distance(currentPlanet.transform.position, transform.position) - planetSeaLevel) * 100;
+                airDensity = currentPlanet.airDensityAtSeaLevel * Mathf.Log(currentAltitude / currentPlanet.atmosphereLimit, 0.33f);
+                dragForce = -0.5f * airDensity * dragCoefficient * Mathf.Pow(rocketRigidbody.velocity.magnitude, 2) * rocketRigidbody.velocity.normalized;
+                if(currentAltitude < currentPlanet.atmosphereLimit)
+                {
+                    isInAtmosphere = true;
+                    rocketRigidbody.AddForce(dragForce, ForceMode.Force);
+                }
+                else
+                {
+                    isInAtmosphere = false;
+                }
+            }
             if (isStageActive)
             {
                 UpdateMass(Time.fixedDeltaTime);

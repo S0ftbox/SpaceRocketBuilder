@@ -6,17 +6,30 @@ using UnityEngine.UI;
 public class TimeScale : MonoBehaviour
 {
     public Text timeScale;
+    GameObject rocket;
     public int timeScaleMultiplier;
     public int currentTimeScale = 0;
 
+    void Start()
+    {
+        rocket = GameObject.FindGameObjectWithTag("Rocket").transform.GetChild(0).gameObject;
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Period) && currentTimeScale < 5)
-            currentTimeScale++;
-        if (Input.GetKeyDown(KeyCode.Comma) && currentTimeScale > 0)
-            currentTimeScale--;
-        if (Input.GetKeyDown(KeyCode.Slash) && currentTimeScale > 0)
+        if (rocket.GetComponent<Rocket>().isInAtmosphere)
+        {
             currentTimeScale = 0;
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Period) && currentTimeScale < 6)
+                currentTimeScale++;
+            if (Input.GetKeyDown(KeyCode.Comma) && currentTimeScale > 0)
+                currentTimeScale--;
+            if (Input.GetKeyDown(KeyCode.Slash) && currentTimeScale > 0)
+                currentTimeScale = 0;
+        }
 
         timeScale.text = timeScaleMultiplier + "x";
     }
