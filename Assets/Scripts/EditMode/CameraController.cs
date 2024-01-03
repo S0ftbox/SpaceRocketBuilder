@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour
     public float maxVertAngle = 80f;
 
     public Vector3 offset;
+    float targetPos;
     public float minOffset = -12f;
     public float maxOffset = -2f;
     float xRotation = 0f;

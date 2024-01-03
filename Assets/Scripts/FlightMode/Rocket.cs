@@ -21,7 +21,7 @@ public class Rocket : MonoBehaviour
     public float currentAltitude;
     public bool isInitialDataSet = false;
     public bool hasCoreModule = false;
-    public bool isInAtmosphere;
+    public bool isInAtmosphere, activateChute;
     public int totalStageCount, currentStage, totalCrewCount;
     public Vector3 planetVelocity, dragForce;
     public GameObject planetTarget;
@@ -57,7 +57,7 @@ public class Rocket : MonoBehaviour
             currentPlanet = planetTarget.GetComponent<PlanetTargetSwitch>().focusedPlanet;
             planetVelocity = currentPlanet.GetComponent<Rigidbody>().velocity;
             rocketRigidbody.constraints = RigidbodyConstraints.FreezeAll;
-            WaitSecond();
+            StartCoroutine(WaitSeconds(3));
         }
     }
 
@@ -118,6 +118,10 @@ public class Rocket : MonoBehaviour
                         totalMass -= tmpMass;
                         initialFuel = totalMass - emptyTotalMass;
                         transform.GetChild(currentStage).parent = null;
+                    }
+                    if(currentStage == 0)
+                    {
+                        activateChute = true;
                     }
                     transform.GetChild(currentStage - 1).GetComponent<StageData>().isStageActive = true;
                     isStageActive = transform.GetChild(currentStage - 1).GetComponent<StageData>().isStageActive;
@@ -203,10 +207,10 @@ public class Rocket : MonoBehaviour
         }
     }
 
-    IEnumerator WaitSecond()
+    IEnumerator WaitSeconds(int sec)
     {
         rocketRigidbody.isKinematic = true;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(sec);
         rocketRigidbody.isKinematic = false;
     }
 }

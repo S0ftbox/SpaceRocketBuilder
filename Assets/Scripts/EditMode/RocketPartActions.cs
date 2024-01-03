@@ -74,8 +74,6 @@ public class RocketPartActions : MonoBehaviour
                 tempObject.transform.SetParent(rocketParent.transform.GetChild(currentStage).transform);
                 rocketDownNode = tempObjectDownNode;
                 stages.stages[currentStage].Add(tempObject);
-                //if (tempObject.tag == "Engine")
-                    //PrintList(stages.stages);
             }
             if (Vector3.Distance(tempObjectDownNode, rocketUpNode) <= distanceToSnap && canPlaceAbove)
             {
@@ -88,7 +86,7 @@ public class RocketPartActions : MonoBehaviour
                     stages.stages.Insert(0, new List<GameObject>());
                     currentStage = 1;
                 }
-                if (tempObject.name == "FuelTankCone_1.25m(Clone)")
+                if (tempObject.name == "FuelTankCone_1.25m(Clone)" || tempObject.name == "Chute_1.25m(Clone)")
                 {
                     canPlaceAbove = false;
                 }

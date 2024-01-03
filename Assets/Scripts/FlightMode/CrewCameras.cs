@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CrewCameras : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class CrewCameras : MonoBehaviour
     public GameObject crewCamera;
     public GameObject crewCamContainer;
     public int crewCount;
+    public Sprite[] sprites;
 
     void Start()
     {
@@ -23,6 +25,7 @@ public class CrewCameras : MonoBehaviour
             {
                 GameObject crewCamInstance = Instantiate(crewCamera);
                 crewCamInstance.transform.SetParent(crewCamContainer.transform);
+                crewCamInstance.GetComponent<Image>().sprite = sprites[Random.Range(0,2)];
             }
         }
     }

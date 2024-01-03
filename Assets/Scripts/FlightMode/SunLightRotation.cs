@@ -4,24 +4,17 @@ using UnityEngine;
 
 public class SunLightRotation : MonoBehaviour
 {
-    Transform rocket;
-    public Transform sun;
+    public Transform sun, planet;
     Vector3 direction;
     Quaternion rotation;
-    public float lightDistance = 5000;
-
-    void Start()
-    {
-        rocket = GameObject.FindGameObjectWithTag("Rocket").transform.GetChild(0);
-    }
 
     // Update is called once per frame
     void Update()
     {
-        direction = (rocket.position - sun.position).normalized;
+        direction = (planet.position - sun.position).normalized;
         rotation = Quaternion.LookRotation(direction);
         transform.rotation = rotation;
-        float distanceToSun = Vector3.Distance(rocket.position, sun.position);
+        /*float distanceToSun = Vector3.Distance(rocket.position, sun.position);
         if(distanceToSun <= lightDistance)
         {
             transform.position = sun.position;
@@ -30,6 +23,6 @@ public class SunLightRotation : MonoBehaviour
         {
             Vector3 directionToRocket = (rocket.position - transform.position).normalized;
             transform.position = rocket.position + directionToRocket * lightDistance;
-        }
+        }*/
     }
 }

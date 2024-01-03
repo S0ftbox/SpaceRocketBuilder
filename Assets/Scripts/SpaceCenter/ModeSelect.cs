@@ -19,12 +19,13 @@ public class ModeSelect : MonoBehaviour
     public Button cancel, load, delete;
     public PartsList partsList;
     public StageManager stages;
-    public GameObject loadingScreen, loadingIndicator;
+    public GameObject loadingScreen, loadingIndicator, loadingImage;
+    public Texture[] textures;
     bool isHovering;
-    int stageCount;
+    int stageCount, percent;
     string selectedFilePath;
     string[] existingFiles;
-
+    
     private void Start()
     {
         // Get the Renderer component of the object
@@ -235,7 +236,7 @@ public class ModeSelect : MonoBehaviour
     {
         var scene = SceneManager.LoadSceneAsync(sceneName);
         scene.allowSceneActivation = false;
-
+        loadingImage.GetComponent<RawImage>().texture = textures[UnityEngine.Random.Range(0, 2)];
         loadingScreen.SetActive(true);
 
         do
@@ -243,7 +244,8 @@ public class ModeSelect : MonoBehaviour
             await Task.Delay(1);
             if (loadingIndicator != null)
             {
-                loadingIndicator.GetComponent<Text>().text = scene.progress.ToString();
+                percent = (int)(scene.progress * 100);
+                loadingIndicator.GetComponent<Text>().text = percent.ToString() + "%";
             }
         } while (scene.progress < 0.9f);
 
