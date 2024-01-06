@@ -1,5 +1,5 @@
 # SpaceRocketBuilder
-Game about building rockets and flying them, created as part of the engineering project (WIP)
+Game about building rockets and flying them, created as part of the engineering project
 
 **Controls:**
 * Flight mode:
@@ -17,18 +17,3 @@ Game about building rockets and flying them, created as part of the engineering 
     * Scroll - zoom in/out the view
   * Other:
     * Space - activate next stage
-
-**Current status of progress:**
-* Basic 2 body physics between a planet and other rigidbody objects ie. Rocket
-  * Apart from the planet there is also a simple solar system containing the star and the planet's moon 
-* Basic rocket behaviour
-  * Working engine behaviour (throttle, fuel consuming)
-  * Working multistaging behaviour (stages can be separated and exist as independent objects)
-* Working rocket editor mode
-  * User is able to select various components and stack them into a rocket model
-  * User is able to save and load his own models
-* Both rocket editor and flight mode are integrated and may be accessible through a hub - Space Center
-  * Space Center is now accessible from the Main Menu
-* Main Menu offers changing various settings and save/reset them
-  * Audio settings - change Master/Music/SFX
-  * Graphics settings - change Quality Preset/Resolution
